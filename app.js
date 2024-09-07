@@ -181,7 +181,7 @@ const connectMongoDB = ({
 try{
     startServerFunction({
         name:"Server 1",
-        port: 3000,
+        port: process.env.PORT,
         description:"First Server"
     })
 
