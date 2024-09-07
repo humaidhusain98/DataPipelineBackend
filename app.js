@@ -30,7 +30,7 @@ const connectToBlockchainThroughProviders =async (chainId)=>{
     }
 }
 
-cron.schedule("*/30 * * * * * ", async function() { 
+cron.schedule("0 0 */8 * * * ", async function() { 
     console.log(EncloserStart);
     console.log("cron job running every 8 hours"); 
 
@@ -87,6 +87,17 @@ const startServerFunction =async ({
 
 const runTopCollectionsDataUpdater = async()=>{
   try{
+    connectMongoDB({
+        dbName:"Staging DB 1",
+        dbConnectionString: process.env.MONGODB_URL_DB1,
+        dbDescription:`Our DB from official Account. Belongs to ${name}`,
+    })
+
+     connectMongoDB({
+        dbName:"Staging DB 2",
+        dbConnectionString: process.env.MONGODB_URL_DB2,
+        dbDescription:`Our DB from humdev101 account. Belongs to ${name}`
+    })
     await getExchangeCollectionsByRanking('eth-main', 'opensea', 'total_volume', 20);
     await getExchangeCollectionsByRanking('poly-main', 'opensea', 'total_volume', 20);
     await getExchangeCollectionsByRanking('eth-main', 'opensea', 'one_day_volume', 20);
