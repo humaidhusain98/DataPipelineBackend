@@ -159,8 +159,7 @@ const collectionSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: false
-    }
-    ,
+    },
 
     category:{
         type: String,

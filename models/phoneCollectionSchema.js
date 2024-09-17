@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const db = mongoose.createConnection(process.env.MONGODB_URL_DB1 + "trikonMarketplace");
 
-const phoneSchema = new mongoose.Schema({
+const phoneCollectionSchema = new mongoose.Schema({
     brand: {
         type: String,
         required: true,
@@ -40,5 +40,5 @@ const phoneSchema = new mongoose.Schema({
     }
 });
 
-const Phone = db.model('Phone', phoneSchema);
-module.exports = Phone;
+const PhoneCollections = db.model('PhoneCollections', phoneCollectionSchema);
+module.exports = PhoneCollections;
