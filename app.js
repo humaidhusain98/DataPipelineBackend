@@ -7,6 +7,7 @@ const { getChainDetailsByChainId } = require('./helpers/chainHelper');
 const cron = require("node-cron"); 
 const nftApiController = require("./controller/nftApiController");
 const serverless = require("serverless-http");
+require('./dataProviders/mobile');
 
 const { getAllCollections, getExchangeCollectionsByRanking, getSingleExchangeCollection, getNFTsOfCollection } = require('./dataProviders/blockSpan');
 

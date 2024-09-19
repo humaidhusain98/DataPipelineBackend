@@ -1,0 +1,15 @@
+2024/09/18-17:47:35.983 7df0 Reusing MANIFEST C:\Users\Administrator\Desktop\git-humaid\dataPipeline\temp\Default\Local Storage\leveldb/MANIFEST-000001
+2024/09/18-17:47:35.987 7df0 Recovering log #83
+2024/09/18-17:47:35.990 7df0 Reusing old log C:\Users\Administrator\Desktop\git-humaid\dataPipeline\temp\Default\Local Storage\leveldb/000083.log 
+2024/09/18-17:47:40.681 7bb4 Level-0 table #87: started
+2024/09/18-17:47:40.690 7bb4 Level-0 table #87: 237318 bytes OK
+2024/09/18-17:47:40.691 7bb4 Delete type=0 #83
+2024/09/18-17:47:40.692 3b68 Compacting 4@0 + 1@1 files
+2024/09/18-17:47:40.710 3b68 Generated table #88@0: 66 keys, 240662 bytes
+2024/09/18-17:47:40.710 3b68 Compacted 4@0 + 1@1 files => 240662 bytes
+2024/09/18-17:47:40.711 3b68 compacted to: files[ 0 1 0 0 0 0 0 ]
+2024/09/18-17:47:40.712 3b68 Delete type=2 #75
+2024/09/18-17:47:40.712 3b68 Delete type=2 #78
+2024/09/18-17:47:40.712 3b68 Delete type=2 #81
+2024/09/18-17:47:40.712 3b68 Delete type=2 #84
+2024/09/18-17:47:40.712 3b68 Delete type=2 #87
