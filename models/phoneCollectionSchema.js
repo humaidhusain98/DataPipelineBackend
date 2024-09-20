@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
-const db = mongoose.createConnection(process.env.MONGODB_URL_DB1 + "trikonMarketplace");
+require('dotenv').config();
 
-const phoneCollectionSchema = new mongoose.Schema({
+const db = mongoose.createConnection(process.env.MONGODB_URL_DB1+"trikonMarketplace");
+
+console.log(process.env.MONGODB_URL_DB1 + "/trikonMarketplace");
+
+
+const phoneSchema = new mongoose.Schema({
     brand: {
         type: String,
         required: true,
@@ -10,29 +15,96 @@ const phoneCollectionSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    image:{
-        type:String,
-        required:true,
+    image: {
+        type: String,
+        required: true,
     },
     price: {
         type: Number,
-        required: true,
+        required: false, 
     },
     releaseDate: {
         type: Date,
-        required: true,
+        required: false,
+    },
+    network: {
+        technology: { type: String, required: false },
+        bands: {
+            _2g: { type: String, required: false },
+            _3g: { type: String, required: false },
+            _4g: { type: String, required: false },
+            _5g: { type: String, required: false },
+        },
+        speed: { type: String, required: false }
+    },
+    launch: {
+        announced: { type: Date, required: false },
+        status: { type: String, required: false }
+    },
+    body: {
+        dimensions: { type: String, required: false },
+        weight: { type: String, required: false },
+        build: { type: String, required: false },
+        sim: { type: String, required: false }
+    },
+    display: {
+        type: {
+            type: String,
+            required: false
+        },
+        size: { type: String, required: false },
+        resolution: { type: String, required: false },
+        protection: { type: String, required: false } 
+    },
+    platform: {
+        os: { type: String, required: false },
+        chipset: { type: String, required: false },
+        cpu: { type: String, required: false },
+        gpu: { type: String, required: false }
+    },
+    memory: {
+        internal: { type: String, required: false }, 
+        external: { type: String, required: false } 
+    },
+    camera: {
+        main: {
+            type: { type: String, required: false }, 
+            features: { type: String, required: false },
+            video: { type: String, required: false }
+        },
+        selfie: {
+            type: { type: String, required: false }, 
+            features: { type: String, required: false },
+            video: { type: String, required: false }
+        }
+    },
+    sound: {
+        loudspeaker: { type: String, required: false },
+        _3_5mm_jack: { type: Boolean, default: false }
+    },
+    communication: {
+        wlan: { type: String, required: false }, 
+        bluetooth: { type: String, required: false },
+        gps: { type: String, required: false },
+        nfc: { type: String, required: false },
+        radio: { type: String, required: false },
+        usb: { type: String, required: false }
     },
     features: {
-        screenSize: {
-            type: String,
-            required: true,
-        },
-        batteryLife: {
-            type: String,
-        },
-        cameraQuality: {
-            type: String,
-        }
+        sensors: { type: String, required: false }, 
+    },
+    battery: {
+        type: { type: String, required: false }, 
+        charging: { type: String, required: false } 
+    },
+    misc: {
+        colors: { type: String, required: false }, 
+        models: { type: String, required: false }, 
+        sar: { type: String, required: false } 
+    },
+    specifications: {
+        type: [String], 
+        required: true
     },
     inStock: {
         type: Boolean,
@@ -40,5 +112,5 @@ const phoneCollectionSchema = new mongoose.Schema({
     }
 });
 
-const PhoneCollections = db.model('PhoneCollections', phoneCollectionSchema);
-module.exports = PhoneCollections;
+module.exports =  Phone = db.model('phoneCollection', phoneSchema);
+

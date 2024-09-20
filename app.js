@@ -7,6 +7,7 @@ const { getChainDetailsByChainId } = require('./helpers/chainHelper');
 const cron = require("node-cron"); 
 const nftApiController = require("./controller/nftApiController");
 const serverless = require("serverless-http");
+const phoneRoutes = require('./routes/phoneRoute');
 require('./dataProviders/mobile');
 
 const { getAllCollections, getExchangeCollectionsByRanking, getSingleExchangeCollection, getNFTsOfCollection } = require('./dataProviders/blockSpan');
@@ -74,6 +75,7 @@ const startServerFunction =async ({
     app.use(express.json());
     app.use(morgan(`combined`, { stream: accessLogStream }));
     app.use("/v1/nft/",nftApiController)
+    app.use('/api',phoneRoutes);
     app.get('/', (req, res) => {
     res.send(`${name} server running on port ${port}`)
     })
@@ -136,8 +138,7 @@ const checkStatusOfEverything =()=>{
         checksPercentage =100
         console.log(`Performing Checks Completed Successfully - ${checksPercentage}% `);
         console.log(EncloserEnd);
-
-       
+   
     }
     catch(e){
         console.log("Performing checks failed");
