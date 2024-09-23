@@ -48,10 +48,7 @@ const phoneSchema = new mongoose.Schema({
         sim: { type: String, required: false }
     },
     display: {
-        type: {
-            type: String,
-            required: false
-        },
+        type: {type: String,required: false},
         size: { type: String, required: false },
         resolution: { type: String, required: false },
         protection: { type: String, required: false } 
@@ -94,8 +91,18 @@ const phoneSchema = new mongoose.Schema({
         sensors: { type: String, required: false }, 
     },
     battery: {
-        type: { type: String, required: false }, 
-        charging: { type: String, required: false } 
+        type: {
+            type: String,
+            default: null
+        },
+        capacity: {
+            type: String,
+            default: null
+        },
+        charging: {
+            type: String,
+            default: null
+        }
     },
     misc: {
         colors: { type: String, required: false }, 

@@ -5,7 +5,7 @@ const screenshotPage = require("../dataProviders/puppeteer");
 
 router.get('/scrape',async(req,res) =>{
     try {
-        const phoneModel = 'galaxy_f05';
+        const phoneModel = 'oppo_f27';
         await screenshotPage(phoneModel);
         res.status(200).send(`Scraping completed for ${phoneModel}`);
     } catch (error) {
