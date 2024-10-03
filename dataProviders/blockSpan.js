@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { getConvertedDataExchangeRankingBlockspan } = require('../adapters/topCollectionsAdapter');
 const { processCollectionsObjectBlockspan}= require('../adapters/processCollectionsAdapter'); 
+
 const headers = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

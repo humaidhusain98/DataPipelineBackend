@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
+
 const db = mongoose.createConnection(process.env.MONGODB_URL_DB1+"trikonMarketplace");
+
 const socialLinksSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -28,7 +31,6 @@ const attributesSchema = new mongoose.Schema({
 
 
 const nftSchema = new mongoose.Schema({
-
 
     nftName:{
         type: String,
@@ -84,11 +86,11 @@ const nftSchema = new mongoose.Schema({
         required: true,
         unique: false
     },
-      nftImage:{
+      nftImage:[{
         type: String,
         required: true,
         unique: false
-    },
+    }],
     attributes: {
         type: [attributesSchema],
         required: false,
@@ -330,13 +332,6 @@ const collectionSchema = new mongoose.Schema({
         required: true,
         unique: false
     }
-
- 
-
-
-
-
-    
 
 })
 
