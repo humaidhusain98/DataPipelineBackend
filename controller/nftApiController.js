@@ -213,23 +213,24 @@ router.post('/getSingleNFT',async(req,res)=>{
 //     }
 // })
 
-router.post('/addGamingCollection',async(req,res)=>{
+router.post('/addCollection',async(req,res)=>{
     try{
        
 
-          const {blockSpanKey,chain} = req.body;
+          const {blockSpanKey,chain,category} = req.body;
           if(  blockSpanKey && chain ){
             let obj;
             let singleExchangeResp = await getSingleExchangeCollection(blockSpanKey,chain,'opensea');
             if(singleExchangeResp){
                 // let floorPriceInETH = "null"
                 let floorPriceInETH = await getFloorPrice(singleExchangeResp.contracts[0]?.contract_address,req.body.chain);
-                obj = await processCollectionsObjectBlockspan(singleExchangeResp,req.body.chain=='poly-main'?'poly-main':'eth-main',floorPriceInETH,"GAMING");
+                obj = await processCollectionsObjectBlockspan(singleExchangeResp,req.body.chain=='poly-main'?'poly-main':'eth-main',floorPriceInETH,category);
                 let gamingCollectionObj = await new GamingCollections({
                     contractAddress: singleExchangeResp.contracts[0]?.contract_address,
                     blockSpanKey:blockSpanKey,
                     name: singleExchangeResp.name,
-                    chain:chain
+                    chain:chain,
+                    category: category
                 })
                 let resp = await GamingCollections.findOne({blockSpanKey: blockSpanKey});
                 if(!resp){
@@ -257,16 +258,19 @@ router.post('/addGamingCollection',async(req,res)=>{
 })
 
 
-router.post('/getGamingCollections',async(req,res)=>{
+router.post('/getCategoryCollections',async(req,res)=>{
     try{
-        let {pageSize, pageNumber } = req.body;
+        let {pageSize, pageNumber ,category} = req.body;
         if(!pageSize){
             pageSize=5;
         }
         if(!pageNumber){
             pageNumber=1
         }
-        let gamingCollectionResp =await Collection.find({category:"GAMING"},{name: 1,blockSpanKey: 1,coverImage:1,chainType: 1,floorPrice: 1,averagePrice:1,totalVolume: 1}).limit(pageSize).skip((pageSize * (pageNumber - 1)));
+        if(!category){
+            category = "GAMING"
+        }
+        let gamingCollectionResp =await Collection.find({category:category},{name: 1,blockSpanKey: 1,coverImage:1,chainType: 1,floorPrice: 1,averagePrice:1,totalVolume: 1}).limit(pageSize).skip((pageSize * (pageNumber - 1)));
         let USDRateResp =  await getETHToUSDRate();
         let USDRate = USDRateResp.USD;
         let modifiedResp = gamingCollectionResp?.map((obj)=>{

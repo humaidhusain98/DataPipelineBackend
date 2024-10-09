@@ -16,6 +16,10 @@ const gamingCollectionsSchema = new mongoose.Schema({
     chain:{
         type: String,
         required: true
+    },
+    category:{
+        type: String,
+        required: true
     }
 
 })
