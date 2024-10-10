@@ -32,7 +32,7 @@ function breakOnTab (string) {
     });
 
     const page = await browser.newPage();
-    await page.goto("https://www.gsmarena.com/oppo_f27-13270.php",{
+    await page.goto("https://www.gsmarena.com/oneplus_pad_2-13210.php",{
         timeout: 60000,  
         waitUntil: 'domcontentloaded'
     });
@@ -51,7 +51,7 @@ function breakOnTab (string) {
     const imageUrl = await page.$eval('.specs-photo-main img', img => img.src);
     console.log("Image URL:", imageUrl);
 
-    const price = 299; 
+    const price = await page.$eval('.price', el => el.textContent.trim()).catch(() => "Price not found");
     const releaseDate = new Date(); 
 
      const networkFeatures = await page.$$eval('#specs-list table', tables => {
@@ -289,6 +289,40 @@ function breakOnTab (string) {
 
 console.log("Battery Features:", batteryFeatures);
 
+const miscFeatures = await page.$$eval('#specs-list table', tables => {
+    let misc = { price: null, colors: null, sar: null, other: null, model: null };
+    tables.forEach(table => {
+        const header = table.querySelector('th')?.textContent.trim();
+        if (header && header.includes('Misc')) {
+            const rows = table.querySelectorAll('tr');
+            rows.forEach(row => {
+                const key = row.querySelector('.ttl')?.textContent.trim();
+                const value = row.querySelector('.nfo')?.textContent.trim();
+                if (key && value) {
+                    if (key.includes('Price')) misc.price = value; 
+                    if (key.includes('Colors')) misc.colors = value;
+                    if (key.includes('SAR') && key.includes('US')) misc.sar = value;
+                    if (key.includes('Model')) misc.model = value; 
+                    if (key.includes('Other')) misc.other = value; 
+                }
+            });
+        }
+    });
+    return misc;
+});
+
+
+let extractedPrice = miscFeatures.price;
+
+if (extractedPrice) {
+    extractedPrice = Number(extractedPrice.replace(/[^\d.-]+/g, "")); 
+}
+
+
+console.log("MISC features:",miscFeatures);
+console.log("Price=",miscFeatures.price);
+console.log("model:",miscFeatures.model);
+
     console.log(`\n\n===================== Phone Specifications =====================`);
     console.log(`Brand: ${brand.trim()}`);
     console.log(`Model: ${phoneModel}`);
@@ -306,9 +340,8 @@ console.log("Battery Features:", batteryFeatures);
 
     const newPhone = new Phone({
         brand: brand.trim(),
-        model: phoneModel,
         image: imageUrl || "N/A",
-        price: price,
+        price: extractedPrice,
         releaseDate: releaseDate,
         body: {
             dimensions: bodyFeatures.dimensions,
@@ -349,6 +382,13 @@ console.log("Battery Features:", batteryFeatures);
             capacity: batteryFeatures.capacity,
             charging: batteryFeatures.charging
         },
+        misc: {
+            price: miscFeatures.price,
+            colors: miscFeatures.colors,
+            sar: miscFeatures.sar,
+            model:miscFeatures.model,
+            other: miscFeatures.other,
+        },
         network: networkFeatures,
         specifications: cleanedData,
     });
@@ -362,79 +402,7 @@ console.log("Battery Features:", batteryFeatures);
 };
 
 
-
-    // const newString = breakOnTab(phoneSpecificationsReturned);
-    // console.log(newString);
-    // let splitPhoneSpecifications = phoneSpecificationsReturned.split("\n");
-    // let newList = [];
-    // let count =0;
-    // for(let char of splitPhoneSpecifications){
-    //     if((char =='') || (char=='  ') || (char=='   ') || (char=='\t\t\t') || (char=='\t') || (char=='\t') || (char=='\t\t') || (char==' \t') ||  (count==0) || ( count==1) ||(char ==' ')){
-        
-    //     }
-    //     else{
-    //         newList.push(char);
-    //     }
-    //     count = count + 1;
-     
-
-    // }
-    // console.log(newList);
-
-    
-    // f.type("Puppeteer")
-    // console.log(f);
-    //wait for sometime
-    // await page.waitForTimeout(4000)
-
-screenshotPage('oppo_f27');
+screenshotPage('OnePlus Pad 2');
 
 module.exports = screenshotPage;
 
-// const puppeteer = require('puppeteer');
-
-// const main = async() =>{
-//     const browser = await puppeteer.launch({headless:false});
-//     const page = await browser.newPage();
-//     await page.goto("https://www.gsmarena.com/apple_iphone_16_pro_max-13123.php", {
-//         waitUntil: 'domcontentloaded'
-//     });
-
-//     const phoneName = await page.$eval('.specs-phone-name-title', el => el.textContent.trim());
-
-//     // Extract image URL
-//     const phoneImage = await page.$eval('.specs-photo-main img', el => el.src);
-
-//     // Extract specifications list (screen size, battery, camera, etc.)
-//     let rawSpecifications = await page.$$eval('#specs-list table tr', rows => {
-//         return rows.map(row => {
-//             const category = row.querySelector('td.ttl')?.textContent.trim();
-//             const value = row.querySelector('td.nfo')?.textContent.trim();
-//             return category && value ? { category, value } : null;
-//         }).filter(Boolean);
-//     });
-
-//     let cleanedSpecifications = rawSpecifications.map(spec => {
-//         // Normalize strings (remove tabs, newlines, etc.)
-//         return {
-//             category: spec.category.replace(/\s+/g, ' ').trim(),
-//             value: spec.value.replace(/\s+/g, ' ').trim()
-//         };
-//     });
-
-//     cleanedSpecifications = cleanedSpecifications.filter(spec => spec.value.toLowerCase() !== 'no' && spec.value.toLowerCase() !== 'n/a');
-
-//     // Optional: Format the output for better readability
-//     const formattedSpecifications = cleanedSpecifications.reduce((acc, spec) => {
-//         return acc + `${spec.category}: ${spec.value}\n`;
-//     }, '');
-
-//     // Log the scraped data
-//     console.log("Phone Name:", phoneName);
-//     console.log("Phone Image URL:", phoneImage);
-//     console.log("Cleaned and Formatted Specifications:\n", formattedSpecifications);
-
-//     await browser.close();
-// };
-
-// main();

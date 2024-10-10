@@ -70,12 +70,19 @@ const startServerFunction =async ({
         dbDescription:`Our DB from humdev101 account. Belongs to ${name}`
     })
 
+    connectMongoDB({
+        dbName:"trikonMarketPlace",
+        dbConnectionString:process.env.MONGODB_URL_DB1,
+        dbDescription:`Our DB from official Account,belongs to server 1 ${name}`
+    })
     
-    app.use(cors());
+    app.use(cors({
+        origin:'http://localhost:3000'
+    }));
     app.use(express.json());
     app.use(morgan(`combined`, { stream: accessLogStream }));
-    app.use("/v1/nft/",nftApiController)
-    app.use('/api',phoneRoutes);
+    app.use("/v1/nft/",nftApiController);
+    app.use("/api",phoneRoutes);
     app.get('/', (req, res) => {
     res.send(`${name} server running on port ${port}`)
     })

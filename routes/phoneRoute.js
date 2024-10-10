@@ -1,25 +1,17 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Phone = require("../models/phoneCollectionSchema");
-const screenshotPage = require("../dataProviders/puppeteer");
-
-router.get('/scrape',async(req,res) =>{
-    try {
-        const phoneModel = 'oppo_f27';
-        await screenshotPage(phoneModel);
-        res.status(200).send(`Scraping completed for ${phoneModel}`);
-    } catch (error) {
-        console.log(err);
-        res.send(500).send('Error occurred while scraping');
-    }
-});
+const PhoneCollections = require('../models/phoneCollectionSchema');
 
 router.get('/phones', async (req, res) => {
+    console.log('Fetching Phones....');
+    
     try {
-        const phones = await Phone.find();
-        res.status(200).json(phones);  
-    } catch (err) {
-        res.status(500).send('Error retrieving phone data from database');
+        const phones = await PhoneCollections.find();
+        console.log("Phones:",phones);
+        res.status(200).json(phones);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching phones', error });
+        console.log(error);
     }
 });
 

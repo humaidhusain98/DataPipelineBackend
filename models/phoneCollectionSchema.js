@@ -3,15 +3,11 @@ require('dotenv').config();
 
 const db = mongoose.createConnection(process.env.MONGODB_URL_DB1+"trikonMarketplace");
 
-console.log(process.env.MONGODB_URL_DB1 + "/trikonMarketplace");
+console.log(process.env.MONGODB_URL_DB1 + "trikonMarketplace");
 
 
 const phoneSchema = new mongoose.Schema({
     brand: {
-        type: String,
-        required: true,
-    },
-    model: {
         type: String,
         required: true,
     },
@@ -20,7 +16,7 @@ const phoneSchema = new mongoose.Schema({
         required: true,
     },
     price: {
-        type: Number,
+        type: String,
         required: false, 
     },
     releaseDate: {
@@ -104,11 +100,12 @@ const phoneSchema = new mongoose.Schema({
             default: null
         }
     },
-    misc: {
-        colors: { type: String, required: false }, 
-        models: { type: String, required: false }, 
-        sar: { type: String, required: false } 
-    },
+   misc: { 
+    price: { type: String, required: false },
+    colors: { type: String, required: false },
+    sar: { type: String, required: false },
+    models: { type: String, required: false },
+},
     specifications: {
         type: [String], 
         required: true
