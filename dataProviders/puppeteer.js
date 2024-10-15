@@ -32,7 +32,7 @@ function breakOnTab (string) {
     });
 
     const page = await browser.newPage();
-    await page.goto("https://www.gsmarena.com/oneplus_pad_2-13210.php",{
+    await page.goto("https://www.gsmarena.com/asus_rog_phone_6d_ultimate-11880.php",{
         timeout: 60000,  
         waitUntil: 'domcontentloaded'
     });
@@ -402,7 +402,7 @@ console.log("model:",miscFeatures.model);
 };
 
 
-screenshotPage('OnePlus Pad 2');
+screenshotPage('Asus ROG Phone 6D Ultimate');
 
 module.exports = screenshotPage;
 
