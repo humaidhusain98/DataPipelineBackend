@@ -57,7 +57,8 @@ const phoneSchema = new mongoose.Schema({
     },
     memory: {
         internal: { type: String, required: false }, 
-        external: { type: String, required: false } 
+        external: { type: String, required: false },
+        
     },
     camera: {
         main: {

@@ -8,6 +8,7 @@ const cron = require("node-cron");
 const nftApiController = require("./controller/nftApiController");
 const serverless = require("serverless-http");
 const phoneRoutes = require('./routes/phoneRoute');
+const phoneByBrandName = require('./routes/phoneByBrandNameRoute');
 require('./dataProviders/mobile');
 
 const { getAllCollections, getExchangeCollectionsByRanking, getSingleExchangeCollection, getNFTsOfCollection } = require('./dataProviders/blockSpan');
@@ -83,6 +84,7 @@ const startServerFunction =async ({
     app.use(morgan(`combined`, { stream: accessLogStream }));
     app.use("/v1/nft/",nftApiController);
     app.use("/api",phoneRoutes);
+    app.use("/api",phoneByBrandName);
     app.get('/', (req, res) => {
     res.send(`${name} server running on port ${port}`)
     })
