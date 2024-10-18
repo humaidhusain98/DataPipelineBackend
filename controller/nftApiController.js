@@ -31,7 +31,7 @@ router.post('/getAllTopCollections',async(req,res)=>{
             let {chain, ranking} = req.body;
             let rankDeterminingType = getRankDeterminingType(chain,ranking);
             if(!rankDeterminingType){
-                rankDeterminingType='total_volume'; // Going back to default eth chain and ranking 
+                rankDeterminingType='total_volume'; 
             }
             let rankedSavedObj =  await rankedObjectSchema.findOne({rank_determiningType:rankDeterminingType});
             let usdConvertedRankedObject;

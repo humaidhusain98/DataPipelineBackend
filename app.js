@@ -9,6 +9,7 @@ const nftApiController = require("./controller/nftApiController");
 const serverless = require("serverless-http");
 const phoneRoutes = require('./routes/phoneRoute');
 const phoneByBrandName = require('./routes/phoneByBrandNameRoute');
+const topCollection = require('./routes/topCollectionRoute');
 require('./dataProviders/mobile');
 
 const { getAllCollections, getExchangeCollectionsByRanking, getSingleExchangeCollection, getNFTsOfCollection } = require('./dataProviders/blockSpan');
@@ -85,6 +86,7 @@ const startServerFunction =async ({
     app.use("/v1/nft/",nftApiController);
     app.use("/api",phoneRoutes);
     app.use("/api",phoneByBrandName);
+    app.use("/api",topCollection);
     app.get('/', (req, res) => {
     res.send(`${name} server running on port ${port}`)
     })
