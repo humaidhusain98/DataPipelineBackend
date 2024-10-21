@@ -290,30 +290,31 @@ router.post('/getCategoryCollections',async(req,res)=>{
 })
 
 
-router.post('/searchCollection',async(req,res)=>{
-    try{
-        const {searchValue} = req.body;
-        let {pageSize, pageNumber } = req.body;
-        if(!pageSize){
-            pageSize=5;
-        }
-        if(!pageNumber){
-            pageNumber=1
-        }
-        if(searchValue){
-           let searchList =await Collection.find({name:{$regex: searchValue,$options:'i'}},{blockSpanKey:1,coverImage:1,name:1,chainType: 1}).limit(pageSize).skip((pageSize * (pageNumber - 1)));
-            res.json(searchList);
-        }
-        else{
-            res.status(400).json({err:"searchValue is required"})
-        }
+router.post('/searchCollection', async (req, res) => {
+    try {
+        const { searchValue } = req.body;
+        let { pageSize, pageNumber } = req.body;
 
-    }
-    catch(e){
+        if (!pageSize) pageSize = 5;
+        if (!pageNumber) pageNumber = 1;
+
+        if (searchValue && searchValue.length >= 2) {
+            let searchList = await Collection.find(
+                { name: { $regex: searchValue, $options: 'i' } } 
+            )
+            .limit(pageSize)
+            .skip(pageSize * (pageNumber - 1));
+
+            res.json(searchList); 
+        } else {
+            res.status(400).json({ err: "Please enter at least 2 characters for suggestions" });
+        }
+    } catch (e) {
         console.log(e);
-        res.status(500).json({err:"Error ="+e})
+        res.status(500).json({ err: "Error =" + e });
     }
-})
+});
+
 
 router.post('/getCarouselCollections',async(req,res)=>{
     try{
