@@ -79,7 +79,8 @@ const startServerFunction =async ({
     })
     
     app.use(cors({
-        origin:'http://localhost:3000'
+        origin:['http://localhost:3000','https://api.humdev101.com']
+
     }));
     app.use(express.json());
     app.use(morgan(`combined`, { stream: accessLogStream }));
