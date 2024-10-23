@@ -32,7 +32,7 @@ function breakOnTab (string) {
     });
 
     const page = await browser.newPage();
-    await page.goto("https://www.gsmarena.com/asus_rog_phone_6d_ultimate-11880.php",{
+    await page.goto("https://www.gsmarena.com/google_pixel_3_xl-9257.php",{
         timeout: 60000,  
         waitUntil: 'domcontentloaded'
     });
@@ -402,7 +402,7 @@ console.log("model:",miscFeatures.model);
 };
 
 
-screenshotPage('Asus ROG Phone 6D Ultimate');
+screenshotPage('Samsung Galaxy Watch7');
 
 module.exports = screenshotPage;
 
